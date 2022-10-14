@@ -1,5 +1,49 @@
 ---
 - name: Converge
   hosts: all
+  become: true
+
+  vars:
+    acl_config:
+      - name: /etc/acl_directory
+        entity: user01
+        etype: group
+        permissions: "rwx"
+        state: present
+
+      - name: /etc/acl_file
+        entity: user01
+        etype: user
+        permissions: "rwx"
+        state: present
+  pre_tasks:
+    - name: Add users
+      user:
+        name: user01
+        shell: /bin/bash
+
+    - name: "Check if files exists"
+      ansible.builtin.stat:
+        path: "{{ item }}"
+        get_attributes: false
+      loop:
+        - /etc/acl_directory
+        - /etc/acl_file
+      register: _acl_check_files_exists
+
+    - name: Create a directory to test
+      file:
+        path: /etc/acl_directory
+        state: directory
+        mode: '0745'
+      when: not _acl_check_files_exists.results[0].stat.exists
+
+    - name: Touch the same file, but add/remove some permissions
+      file:
+        path: /etc/acl_file
+        state: touch
+        mode: '0744'
+      when: not _acl_check_files_exists.results[1].stat.exists
+
   roles:
     - role: claranet.acl
