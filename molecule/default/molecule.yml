@@ -8,8 +8,8 @@ driver:
 platforms:
   # On "${name:-${image:-debian}", the last brace does not miss, it works like that...
   # The env var should be used when the image variable refers to a full registry path like registry.access.redhat.com/ubi8/ubi
-  - name: claranet_acl_${name:-${image:-debian}-${tag:-latest}-${scenario:-default}
-    image: ${image:-debian}:${tag:-latest}
+  - name: claranet_acl_debian_latest_default
+    image: debian:latest
     privileged: true
     tty: true
     volumes:
@@ -24,6 +24,7 @@ platforms:
 
 provisioner:
   name: ansible
+  log: true
   env:
     ANSIBLE_FORCE_COLOR: "true"
   options:
