@@ -25,7 +25,7 @@ ansible-galaxy install claranet.acl
 
 Variable | Default value | Description
 ---------|---------------|------------
-null     | **null**      | null       
+acl_config      | **""**      | acl to set       
 
 ## :arrows_counterclockwise: Dependencies
 
@@ -38,6 +38,13 @@ N/A
 - hosts: all
   roles:
     - claranet.acl
+  vars:
+  acl_config:
+    - name:        /etc/acl_directory
+      entity:      user01
+      etype:       user
+      permissions: "rw"
+      state:       present
 ```
 
 ## :closed_lock_with_key: [Hardening](HARDENING.md)
