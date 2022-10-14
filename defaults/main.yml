@@ -1,2 +1,4 @@
 ---
-# defaults file for role
+# defaults file for acl
+
+acl_config: []
