@@ -3,6 +3,7 @@
 - name: Installing required packages
   ansible.builtin.yum:
     name: "{{ item }}"
+    update_cache: true
     state: present
-  with_items:
+  loop:
     - acl
