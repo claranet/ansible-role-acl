@@ -1,8 +1,10 @@
 ---
 # tasks file for DEBIAN
 - name: Installing required packages
-  ansible.builtin.package:
+  ansible.builtin.apt:
     name: "{{ item }}"
+    update_cache: true
+    force_apt_get: true
     state: present
-  with_items:
+  loop:
     - acl
