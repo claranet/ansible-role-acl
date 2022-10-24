@@ -12,9 +12,17 @@ galaxy_info:
   galaxy_tags: ['claranet', 'acl']
 
   platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Amazon
+      versions:
+        - all
     - name: Debian
       versions:
-        - stretch
-        - buster
+        - all
+    - name: Ubuntu
+      versions:
+        - all
 
 dependencies: []
