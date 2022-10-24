@@ -27,7 +27,7 @@
         - "{{ ansible_distribution | lower }}.yml"
         - "{{ ansible_os_family | lower }}.yml"
         - "{{ ansible_system | lower }}.yml"
-        - "defaults.yml"
+        - "{{ 'debian' if ansible_distro == 'ubuntu' else 'redhat' if ansible_distro == 'amazonlinux' else 'debian' }}.yml"
   loop_control:
     loop_var: loop_distribution
   tags:
