@@ -1,4 +1,16 @@
 ---
 # defaults file for acl
 
-acl_config: []
+# acl to set
+acl_config:
+  - path: /etc/foo.conf
+    default: false
+    entity: "root"
+    etype: "user"
+    follow: true
+    permissions: "rwx"
+    state: query
+    recursive: false
+
+# default package name
+acl_default_package_name: "acl"
