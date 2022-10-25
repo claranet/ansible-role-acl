@@ -10,10 +10,10 @@
         etype: group
         permissions: "rwx"
         state: present
-  
+
   pre_tasks:
     - name: Add users
-      user:
+      ansible.builtin.user:
         name: user01
         shell: /bin/bash
 
@@ -24,7 +24,7 @@
       register: _acl_check_files_exists
 
     - name: Create a directory to test
-      file:
+      ansible.builtin.file:
         path: "/etc/acl_directory"
         state: directory
         mode: '0745'
