@@ -27,12 +27,26 @@
         - "{{ ansible_distribution | lower }}.yml"
         - "{{ ansible_os_family | lower }}.yml"
         - "{{ ansible_system | lower }}.yml"
-        - "{{ 'debian' if ansible_distro == 'ubuntu' else 'redhat' if ansible_distro == 'amazonlinux' else 'debian' }}.yml"
   loop_control:
     loop_var: loop_distribution
   tags:
     - configuration
     - packages
 
-- name: include configure tasks
-  ansible.builtin.include_tasks: config_acl.yml
+- name: Debug
+  ansible.builtin.debug:
+    var: acl_config
+
+- name: Setup ACL information.
+  ansible.posix.acl:
+    path: "{{ item.path }}"
+    default: "{{ item.default | default(omit) }}"
+    entity: "{{ item.entity }}"
+    etype: "{{ item.etype }}"
+    follow: "{{ item.follow | default(omit) }}"
+    permissions: "{{ item.permissions }}"
+    state: "{{ item.state }}"
+    recursive: "{{ item.recursive | default(omit) }}"
+  loop: "{{ acl_config }}"
+  loop_control:
+    label: "{{ item.path }}"
