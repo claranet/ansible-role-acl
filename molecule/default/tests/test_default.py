@@ -15,13 +15,7 @@ def test_acl_is_installed(host):
     assert _acl_package.is_installed
 
 
-def test_file_exist_and_perm_change(host):
-    """Validate acl file."""
-    _file_controlled_by_acl = host.run("sudo getfacl /etc/acl_file | grep user01")
-    assert _file_controlled_by_acl.succeeded
-
-
-def test_directory_exist_and_mode_change(host):
+def test_directory_exists_and_mode_has_changed(host):
     """Validate acl directory."""
     _directory_controlled_by_acl = host.file("/etc/acl_directory")
 
